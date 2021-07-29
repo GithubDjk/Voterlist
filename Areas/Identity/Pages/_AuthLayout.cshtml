@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/SignInUP.css" rel="stylesheet" />
+<div class="container">
+    <div class="frame">
+        <div class="nav">
+            <ul class="links">
+                <li class="signin-active"><a class="btn" href="/Identity/Account/Login">Sign in</a></li>
+                <li class="signup-active"><a class="btn" href="/Identity/Account/Register">Sign up </a></li>
+               
+            </ul>
+        </div>
+        <div ng-app ng-init="checked = false">
+            @RenderBody()
+        </div>
+        </div>
+</div>
+
+
+
+@*
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item" id="signin-tab">
+                        <a class="nav-link tab active" href="/Identity/Account/Login"> Sign In </a>
+                    </li>
+                    <li class="nav-item tab" id="signup-tab">
+                        <a class="nav-link tab" href="/Identity/Account/Register">Sign Up </a>
+
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>*@
+
+
+@section Scripts {
+    @RenderSection("scripts", required: false)
+<script src="~/js/SignInUp.js"></script>
+
+}
+
+
+
+

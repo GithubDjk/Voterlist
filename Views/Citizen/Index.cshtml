@@ -1,0 +1,91 @@
+﻿@model IEnumerable<VoterListApp.Models.Citizen>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container row">
+
+    <div class="col-6 p-0 m-0">
+        <h1>Voter Lists...</h1>
+    </div>
+    <div class="col-3 offset-3">
+        <a asp-action="CreateEdit" class="btn btn-info form-control text-white">Add New Voter</a>
+    </div>
+
+    <div class="col-12 p-3">
+        <table id="tbl" class="table table-bordered table-striped" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Father's Name</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    @*
+
+
+        @if (Model.Any())
+        {
+            <div class="row">
+                <div class="col-2">
+                    <label asp-for="@Model.FirstOrDefault().Name">name</label>
+                </div>
+                <div class="col-2">
+                    <label asp-for="@Model.FirstOrDefault().fatherName">Father's Name</label>
+                </div>
+                <div class="col-1">
+                    <label asp-for="@Model.FirstOrDefault().Age">Age</label>
+                </div>
+                <div class="col-2">
+                    <label asp-for="@Model.FirstOrDefault().Sex">Sex</label>
+                </div>
+                <div class="col-3">
+                    <label asp-for="@Model.FirstOrDefault().Address">Address</label>
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="col-2">
+                        <label asp-for="@item => item.Name">@item.Name</label>
+                    </div>
+                    <div class="col-2">
+                        <label asp-for="@item => item.Name">@item.fatherName</label>
+                    </div>
+                    <div class="col-1">
+                        <label asp-for="@item => item.Age">@item.Age</label>
+                    </div>
+                    <div class="col-2">
+                        <label asp-for="@item => item.Name">@item.Sex</label>
+                    </div>
+                    <div class="col-2">
+                        <label asp-for="@item => item.Address">@item.Address</label>
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-primary text-white btn-sm" asp-route-id="@item.id" asp-action="CreateEdit">Edit</a>
+                        <a class="btn btn-secondary text-white btn-sm" asp-route-id="@item.id" asp-action="Detail">Detail</a>
+                        <a class="btn btn-danger text-white btn-sm" asp-route-id="@item.id" asp-action="Delete" onclick="return confirm('Are you sure?')">Delete</a>
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <div class="row">
+                <h3>No Data Found !! </h3>
+            </div>
+        }*@
+</div>
+
+@section Scripts {
+        <script src="~/js/myindex.js"></script>
+}
+
+

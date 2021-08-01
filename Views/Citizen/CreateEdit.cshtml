@@ -9,12 +9,17 @@
 
 <div class="container">
     <div class="col-lg-6 offset-3">
-        <form method="Post" />
+        <form method="Post" enctype="multipart/form-data" />
 
         @if (Model != null)
         {
             <input type="hidden" asp-for="id">
         }
+    <div class="form-row text-center">
+        <img src="@(Model != null ? "~/images/"+Model.ImageName : "")" asp-append-version="true" width="250px" height="250px" class="rounded-circle border" alt="No Image" />
+        <input asp-for="ImageFile" accept="images/*" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
         <div class="form-row">
             <label asp-for="@Model.Name">Name</label>
             <input asp-for="@Model.Name" type="text" class="form-control">
@@ -29,7 +34,7 @@
 
         <div class="form-row">
             <label asp-for="@Model.Age">Age</label>
-            <input asp-for="@Model.Age"  class="form-control">
+            <input asp-for="@Model.Age" class="form-control">
             <span asp-validation-for="@Model.Age" class="text-danger"></span>
         </div>
 

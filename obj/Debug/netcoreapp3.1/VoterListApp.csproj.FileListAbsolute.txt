@@ -419,7 +419,6 @@ D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore
 D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.UI.dll
 D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
 D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Embedded.dll
-D:\DotNet\VoterListApp\VoterListApp\obj\Debug\netcoreapp3.1\VoterListApp.csproj.AssemblyReference.cache
 D:\DotNet\VoterListApp\VoterListApp\obj\Debug\netcoreapp3.1\scopedcss\bundle\VoterListApp.styles.css
 D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\DotNet\VoterListApp\VoterListApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
@@ -442,3 +441,4 @@ D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\runtimes\win-x86\nat
 D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 D:\DotNet\VoterListApp\VoterListApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\DotNet\VoterListApp\VoterListApp\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_AuthLayout.cshtml.g.cs
+D:\DotNet\VoterListApp\VoterListApp\obj\Debug\netcoreapp3.1\VoterListApp.csproj.AssemblyReference.cache

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoterListApp.Models;
@@ -17,9 +19,11 @@ namespace VoterListApp.Controllers
 
         private readonly ApplicationDbContext db;
         private readonly INotyfService _notyf;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public CitizenController(ApplicationDbContext _db, INotyfService notyf)
+        public CitizenController(ApplicationDbContext _db, INotyfService notyf ,IWebHostEnvironment hostEnvironment)
         {
+            _hostEnvironment = hostEnvironment;
             _notyf = notyf;
             db = _db;
         }
@@ -59,6 +63,19 @@ namespace VoterListApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Save image to wwwroot/image
+                if (Voter.ImageFile != null)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(Voter.ImageFile.FileName);
+                    string extension = Path.GetExtension(Voter.ImageFile.FileName);
+                    Voter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/images/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Voter.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
                 var voter = await db.Citizens.FirstOrDefaultAsync(x => x.id == Voter.id);
                 if (voter != null)
                 {
@@ -67,12 +84,12 @@ namespace VoterListApp.Controllers
                     voter.Age = Voter.Age;
                     voter.Sex = Voter.Sex;
                     voter.fatherName = Voter.fatherName;
+                    voter.ImageName = Voter.ImageName;
                     db.Citizens.Update(voter);
                     _notyf.Success("Successfully Updated");
                 }
                 else
                 {
-
                     await db.Citizens.AddAsync(Voter);
                     _notyf.Success("Successfully Added");
                 }
@@ -101,6 +118,11 @@ namespace VoterListApp.Controllers
             var Voter = await db.Citizens.FirstOrDefaultAsync(item => item.id == id);
             if (Voter != null)
             {
+
+                //delete image from wwwroot/image
+                var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "images", Voter.ImageName);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
                 db.Citizens.Remove(Voter);
             }
             await db.SaveChangesAsync();

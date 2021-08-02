@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +29,16 @@ namespace VoterListApp.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public RegisterModel(
+            public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IWebHostEnvironment hostEnvironment)
         {
+            _hostEnvironment = hostEnvironment;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -61,6 +69,35 @@ namespace VoterListApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public string FirstName { get; set; }
+
+            [Required]
+            public string LastName { get; set; }
+
+            [Required]
+            public string Address { get; set; }
+
+
+            [Required(ErrorMessage = "You must provide a phone number")]
+            [Display(Name = "Phone Number")]
+            [DataType(DataType.PhoneNumber)]
+            [RegularExpression(@"^\(?([0-9]{10})$", ErrorMessage = "Not a valid phone number")]
+            public string Contact { get; set; }
+
+
+            [Required(ErrorMessage = "Please choose your date of Birth")]
+            [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+            public DateTime DateOfBirth { get; set; }
+
+            [Column(TypeName = "nvarchar(100)")]
+            [DisplayName("Image Name")]
+            public string? UserImageName { get; set; }
+
+            [NotMapped]
+            [DisplayName("Upload File")]
+            public IFormFile? UserImageFile { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +112,20 @@ namespace VoterListApp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                if (Input.UserImageFile != null)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(Input.UserImageFile.FileName);
+                    string extension = Path.GetExtension(Input.UserImageFile.FileName);
+                    Input.UserImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/images/Userimage", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Input.UserImageFile.CopyToAsync(fileStream);
+                    }
+                }
+
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email , FirstName = Input.FirstName , LastName=Input.LastName , Contact=Input.Contact , Address=Input.Address , UserImageName=Input.UserImageName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

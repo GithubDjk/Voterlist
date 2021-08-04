@@ -9,8 +9,25 @@
 <div class="row">
     <div class="col-md-4">
         <section>
-            <form class="form-signup" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <form class="form-signup" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-row text-center">
+                    @*                    <img src="@(Input != null ? "~/images/"+Input.UserImageFile : "")" asp-append-version="true" width="250px" height="250px" class="rounded-circle border" alt="No Image" />
+                    *@
+                    <label asp-for="Input.UserImageFile" class="col-form-label"></label>
+                    <input asp-for="Input.UserImageFile" accept="images/*" />
+                    <span asp-validation-for="Input.UserImageFile" class="text-danger"></span>
+                </div>
+
+                <label asp-for="Input.FirstName" class="col-form-label"></label>
+                <input asp-for="Input.FirstName" class="form-styling" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+
+                <label asp-for="Input.LastName" class="col-form-label"></label>
+                <input asp-for="Input.LastName" class="form-styling" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+
 
                 <label asp-for="Input.Email" class="col-form-label"></label>
                 <input asp-for="Input.Email" class="form-styling" />
@@ -24,10 +41,16 @@
                 <input asp-for="Input.ConfirmPassword" class="form-styling" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 
+                <label asp-for="Input.Address" class="col-form-label"></label>
+                <input asp-for="Input.Address" class="form-styling" />
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
 
+                <label asp-for="Input.Contact" class="col-form-label"></label>
+                <input asp-for="Input.Contact" class="form-styling" />
+                <span asp-validation-for="Input.Contact" class="text-danger"></span>
 
                 <button type="submit" class="btn btn-signup">Register</button>
-                  </form>
+            </form>
 
 
 

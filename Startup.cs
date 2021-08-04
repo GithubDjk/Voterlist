@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VoterListApp.Areas.Identity.Data;
 using VoterListApp.Models;
+using VoterListApp.Services;
 
 namespace VoterListApp
 {
@@ -32,9 +33,9 @@ namespace VoterListApp
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
-
-
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
       
 
         }
